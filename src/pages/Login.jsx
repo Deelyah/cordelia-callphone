@@ -1,9 +1,12 @@
+import "./pages.css"
 const Login = () => {
   let handleSubmit = () => {};
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <p>I am a Login</p>
+      <div className="bg-img w-full h-10">
+        <p>Hello World</p>
+      </div>
       </form>
     </>
   );

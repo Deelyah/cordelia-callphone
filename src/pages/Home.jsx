@@ -1,6 +1,11 @@
+
 const Home = () => {
   return (
-    <div></div>
+    <div>
+      <div className="bg-[url('../assets/bg.png')]">
+        <p>Hello World</p>
+      </div>
+    </div>
     
   );
 };
