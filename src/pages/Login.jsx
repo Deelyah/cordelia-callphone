@@ -9,6 +9,8 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import BaseSpinner from "../components/base-components/BaseSpinner";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Login = () => {
   let dispatch = useDispatch();
   let navigateTo = useNavigate();
@@ -34,12 +36,15 @@ const Login = () => {
       })
       .catch((error) => {
         setIsLoading(false);
-        alert(error.response.data.message);
+        toast.error(error.response.data.message, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       });
   };
 
   return (
     <div className="">
+      <ToastContainer />
       <div className="bg-img bg-contain w-full min-h-screen flex flex-col justify-center items-center sm:pt-10">
         <div className="flex justify-center mt-6">
           <img
