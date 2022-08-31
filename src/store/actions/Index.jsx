@@ -1,6 +1,11 @@
-let baseURL = process.env.REACT_APP_BASE_URL;
+let baseURL = "https://adminstaging.airgate.ng/index.php/api/auth";
 
-const login = async () => {
-  return await axios.post(`${baseURL}/v1/check-email`, email, headers);
+import axios from "axios";
+export const login = async (userData) => {
+  return await axios.post(`${baseURL}/login`, userData);
 };
-const logOut = async () => {};
+export const logOut = async () => {
+  return await axios.post(
+    `https://adminstaging.airgate.ng/index.php/api/auth/logout`
+  );
+};

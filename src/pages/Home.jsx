@@ -1,10 +1,21 @@
 import BaseCard from "../components/base-components/BaseCard";
 import "./pages.css";
 import logo from "../assets/logo.png";
-import { Link } from "react-router-dom";
-// import { Link } from "react-router-dom";
+import { logOut } from "../store/actions/Index";
+import { useNavigate } from "react-router-dom";
 const Home = () => {
-  let handleLogOut = () => {};
+  let navigateTo = useNavigate();
+  let handleLogOut = () => {
+    logOut()
+      .then(() => {
+        window.localStorage.removeItem("IS_AUTHENTICATED");
+        navigateTo("/login");
+      })
+      .catch(() => {
+        window.localStorage.removeItem("IS_AUTHENTICATED");
+        navigateTo("/login");
+      });
+  };
   return (
     <div className="h-screen">
       <div className="relative bg-img bg-contain w-full h-full flex flex-col justify-start items-start pt-9 px-8">
