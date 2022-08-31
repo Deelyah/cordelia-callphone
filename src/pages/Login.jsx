@@ -3,14 +3,42 @@ import "./pages.css";
 import logo from "../assets/logo.png";
 import visible from "../assets/open.png";
 import hidden from "../assets/close.png";
-
+import { login } from "../store/actions/Index";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import BaseSpinner from "../components/base-components/BaseSpinner";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
+  let dispatch = useDispatch();
+  let navigateTo = useNavigate()
   let [pswdIsVisible, setPswdIsVisible] = useState(false);
+  let [userDetails, setUserDetails] = useState({});
+  let [isLoading, setIsLoading] = useState(false);
+
+  let handleInputChange = (e) => {
+    setUserDetails((prevState) => {
+      return { ...prevState, [e.target.name]: e.target.value };
+    });
+  };
+
   let handleSubmit = (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    login(userDetails)
+      .then((res) => {
+        window.localStorage.setItem("IS_AUTHENTICATED", true)
+        console.log(res.data.user);
+        setIsLoading(false);
+        dispatch({ type: "LOGIN", payload: res.data });
+        navigateTo("/")
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        alert(error.message);
+      });
   };
+
   return (
     <div className="h-screen">
       <div className="bg-img bg-contain w-full h-full flex flex-col justify-center items-center sm:pt-10">
@@ -36,15 +64,19 @@ const Login = () => {
             className="py-[26px]"
           >
             <div>
-              <label htmlFor="username" className="text-[#9B9B9B]">
-                Username
+              <label htmlFor="email" className="text-[#9B9B9B]">
+                Email
               </label>
               <input
-                type="text"
-                name="username"
-                id="username"
+                required
+                type="email"
+                name="email"
+                id="email"
+                onChange={(e) => {
+                  handleInputChange(e);
+                }}
                 className="w-full py-3 md:py-4 rounded-lg bg-[#9a9fbf20] px-3 md:px-4 focus:outline-none"
-                placeholder="Username"
+                placeholder="1234@gmail.com"
               />
             </div>
             <div className="mt-6">
@@ -53,9 +85,13 @@ const Login = () => {
               </label>
               <div className="flex items-center w-full rounded-lg bg-[#e8f0fe] pr-2">
                 <input
+                  required
                   type={pswdIsVisible ? "text" : "password"}
                   name="password"
                   id="password"
+                  onChange={(e) => {
+                    handleInputChange(e);
+                  }}
                   className="rounded-lg px-3 md:px-4 py-3 md:py-4 bg-transparent w-11/12 focus:outline-none"
                 />
                 <div className="">
@@ -99,8 +135,8 @@ const Login = () => {
                 </Link>
               </div>
             </div>
-            <button className="w-full text-white bg-[#4834D4] py-3 md:py-4 mt-11 rounded-lg">
-              Login
+            <button className="w-full flex justify-center items-center text-white bg-[#4834D4] py-3 md:py-4 mt-11 rounded-lg">
+              {isLoading ? <BaseSpinner /> : "Login"}
             </button>
           </form>
         </BaseCard>
