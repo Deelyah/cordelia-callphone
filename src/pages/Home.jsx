@@ -3,16 +3,22 @@ import "./pages.css";
 import logo from "../assets/logo.png";
 import { logOut } from "../store/actions/Index";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 const Home = () => {
   let navigateTo = useNavigate();
+  let userName = useSelector((state) => state?.login?.data?.user?.name);
+
+  let backUpUserName = window.localStorage.getItem("userName");
   let handleLogOut = () => {
     logOut()
-      .then(() => {
-        window.localStorage.removeItem("IS_AUTHENTICATED");
+      .then((res) => {
+        window.localStorage.clear();
         navigateTo("/login");
       })
       .catch(() => {
-        window.localStorage.removeItem("IS_AUTHENTICATED");
+        window.localStorage.clear();
+
         navigateTo("/login");
       });
   };
@@ -30,7 +36,7 @@ const Home = () => {
         <div className="fixed bottom-10 right-0 md:bottom-[60px] md:right-[60px]">
           <BaseCard>
             <h2 className="text-xl md:text-2xl text-black font-medium">
-              Hi John!
+              Hi {userName ? userName : backUpUserName}!
             </h2>
             <p className="text-sm md:text-base text-[#444444]">
               Thank you for using our service

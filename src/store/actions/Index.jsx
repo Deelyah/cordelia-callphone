@@ -1,11 +1,9 @@
-let baseURL = "https://adminstaging.airgate.ng/index.php/api/auth";
-
 import axios from "axios";
+let baseURL = import.meta.env.VITE_APP_BASE_URL;
+
 export const login = async (userData) => {
-  return await axios.post(`${baseURL}/login`, userData);
+  return await axios.post(`${baseURL}/auth/login`, userData);
 };
 export const logOut = async () => {
-  return await axios.post(
-    `https://adminstaging.airgate.ng/index.php/api/auth/logout`
-  );
+  return await axios.post(`${baseURL}/auth/logout`);
 };

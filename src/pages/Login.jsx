@@ -31,8 +31,9 @@ const Login = () => {
       .then((res) => {
         window.localStorage.setItem("IS_AUTHENTICATED", true);
         setIsLoading(false);
-        dispatch({ type: "LOGIN", payload: res.data });
-        navigateTo("/home");
+        dispatch({ type: "LOGIN", payload: { ...res.data } });
+        window.localStorage.setItem("userName", res.data.data.user.name);
+        navigateTo("/");
       })
       .catch((error) => {
         setIsLoading(false);
@@ -87,7 +88,7 @@ const Login = () => {
               <label htmlFor="password" className="text-[#9B9B9B]">
                 Password
               </label>
-              <div className="flex items-center w-full rounded-lg bg-[#e8f0fe] pr-2">
+              <div className="flex items-center w-full rounded-lg bg-[#9a9fbf20] pr-2">
                 <input
                   required
                   type={pswdIsVisible ? "text" : "password"}
@@ -96,7 +97,7 @@ const Login = () => {
                   onChange={(e) => {
                     handleInputChange(e);
                   }}
-                  className="rounded-lg px-3 md:px-4 py-3 md:py-4 bg-transparent w-11/12 focus:outline-none"
+                  className="bg-transparent rounded-lg px-3 md:px-4 py-3 md:py-4 w-11/12 focus:outline-none"
                 />
                 <div className="">
                   {pswdIsVisible && (
@@ -132,7 +133,7 @@ const Login = () => {
               </div>
               <div className="flex justify-end w-full md:w-1/2">
                 <Link
-                  to="/"
+                  to="/forgot-password"
                   className="text-[#13113F] ml-3 text-xs font-medium"
                 >
                   Forgot password?
