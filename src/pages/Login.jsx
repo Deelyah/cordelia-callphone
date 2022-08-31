@@ -11,7 +11,7 @@ import BaseSpinner from "../components/base-components/BaseSpinner";
 import { useNavigate } from "react-router-dom";
 const Login = () => {
   let dispatch = useDispatch();
-  let navigateTo = useNavigate()
+  let navigateTo = useNavigate();
   let [pswdIsVisible, setPswdIsVisible] = useState(false);
   let [userDetails, setUserDetails] = useState({});
   let [isLoading, setIsLoading] = useState(false);
@@ -27,21 +27,20 @@ const Login = () => {
     setIsLoading(true);
     login(userDetails)
       .then((res) => {
-        window.localStorage.setItem("IS_AUTHENTICATED", true)
-        console.log(res.data.user);
+        window.localStorage.setItem("IS_AUTHENTICATED", true);
         setIsLoading(false);
         dispatch({ type: "LOGIN", payload: res.data });
-        navigateTo("/")
+        navigateTo("/home");
       })
       .catch((error) => {
         setIsLoading(false);
-        alert(error.message);
+        alert(error.response.data.message);
       });
   };
 
   return (
-    <div className="h-screen">
-      <div className="bg-img bg-contain w-full h-full flex flex-col justify-center items-center sm:pt-10">
+    <div className="">
+      <div className="bg-img bg-contain w-full min-h-screen flex flex-col justify-center items-center sm:pt-10">
         <div className="flex justify-center mt-6">
           <img
             src={logo}
