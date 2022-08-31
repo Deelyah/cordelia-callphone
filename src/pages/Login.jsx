@@ -13,7 +13,7 @@ const Login = () => {
   };
   return (
     <div className="h-screen">
-      <div className="bg-img w-full h-full flex flex-col justify-center items-center sm:pt-10">
+      <div className="bg-img bg-contain w-full h-full flex flex-col justify-center items-center sm:pt-10">
         <div className="flex justify-center mt-6">
           <img
             src={logo}
