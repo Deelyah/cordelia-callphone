@@ -3,7 +3,7 @@ let initialState = {
 };
 
 const reducers = (state = initialState, action) => {
-  switch (action.payload) {
+  switch (action.type) {
     case "LOGIN":
       state.login = action.payload;
       return state;

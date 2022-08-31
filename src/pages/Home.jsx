@@ -3,6 +3,7 @@ import "./pages.css";
 import logo from "../assets/logo.png";
 import { logOut } from "../store/actions/Index";
 import { useNavigate } from "react-router-dom";
+
 const Home = () => {
   let navigateTo = useNavigate();
   let handleLogOut = () => {
