@@ -31,8 +31,8 @@ const Login = () => {
       .then((res) => {
         window.localStorage.setItem("IS_AUTHENTICATED", true);
         setIsLoading(false);
-        console.log(res.data);
         dispatch({ type: "LOGIN", payload: { ...res.data } });
+        window.localStorage.setItem("userName", res.data.data.user.name);
         navigateTo("/");
       })
       .catch((error) => {
